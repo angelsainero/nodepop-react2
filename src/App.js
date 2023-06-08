@@ -1,4 +1,5 @@
 import './App.css';
+import LoginPage from './components/Auth/LoginPage';
 import './components/adverts/AdvertsPage'
 import AdvertsPage from './components/adverts/AdvertsPage';
 
@@ -7,7 +8,8 @@ import AdvertsPage from './components/adverts/AdvertsPage';
 function App() {
   return (
     <div className="paper">
-      <AdvertsPage />
+      {/* <AdvertsPage /> */}
+      <LoginPage />
     </div>
   );
 }
