@@ -1,10 +1,13 @@
-import logo from './logo.svg';
 import './App.css';
+import './components/adverts/AdvertsPage'
+import AdvertsPage from './components/adverts/AdvertsPage';
+
+
 
 function App() {
   return (
-    <div className="App">
-      Hello react
+    <div className="paper">
+      <AdvertsPage />
     </div>
   );
 }
