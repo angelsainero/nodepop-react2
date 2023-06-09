@@ -1,13 +1,18 @@
+import { useState } from "react";
 import { login } from "./service";
 
-function LoginPage() {
+
+function LoginPage({setIsLogged}) {
+ 
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const response = await login({
+    await login({
       email: event.target.email.value,
       password: event.target.password.value,
     });
-    console.log(response)
+    // Estoy logueado
+    setIsLogged(true);
   };
   return (
     <div
@@ -19,7 +24,7 @@ function LoginPage() {
       <form onSubmit={handleSubmit}>
         <input type="text" name="email" />
         <input type="password" name="password" />
-        <button type="submit">Log in</button>
+        <button type="submit" disabled={setIsLogged}>Log in</button>
       </form>
     </div>
   );
