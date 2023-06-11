@@ -6,13 +6,21 @@ import AdvertsPage from './components/adverts/AdvertsPage';
 
 
 
-function App() {
+function App({isInitillyLogged}) {
   //definimos aqui el estado en vez de en loginpage porque necesitamos también usarlo aqui y no podemos pasarlo de abajo a arriba
-  const [isLogged, setIsLogged] = useState(false);
+  const [isLogged, setIsLogged] = useState(isInitillyLogged);
+
+  const handleLogin = () => {
+    setIsLogged(true);
+  }
   
+  const handleLogout = () => {
+    setIsLogged(false);
+  }
+
   return (
     <div className="paper">
-      {isLogged ? <AdvertsPage /> : <LoginPage setIsLogged={setIsLogged}/>}
+      {isLogged ? <AdvertsPage onLogout={handleLogout}/> : <LoginPage onLogin={handleLogin}/>}
       
     </div>
   );

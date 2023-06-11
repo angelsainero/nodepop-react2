@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getLatestAdverts } from "./service";
+import { logout } from "../Auth/service";
 
 //1-Advertpage se renderiza por primera vez con Array vacio
 //2-se configura un efecto
@@ -12,7 +13,7 @@ import { getLatestAdverts } from "./service";
 
 
 
-const AdvertsPage = () => {
+const AdvertsPage = ({onLogout}) => {
     
   const [adverts, setAdverts] = useState([]);
   
@@ -23,8 +24,14 @@ const AdvertsPage = () => {
     getLatestAdverts().then((adverts) => setAdverts(adverts));
   }, []);
 
+  const handleClick = async () => {
+    await logout();
+    onLogout();
+  }
+
   return (
     <div className="advertsPage">
+      <button onClick={handleClick}>Logout</button>
       <ul>
         {adverts.map((advert) => (
           <li key={advert.id}>{advert.name}</li>
