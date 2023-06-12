@@ -8,9 +8,11 @@ function LoginPage({ onLogin }) {
     password: "",
   });
 
+  const [keepSession, setKeepSession] = useState(false);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-    await login(credentials);
+    await login(credentials, keepSession);
     // Estoy logueado
     onLogin();
   };
@@ -30,6 +32,11 @@ function LoginPage({ onLogin }) {
       [event.target.name]: event.target.value,
     });
   };
+
+  const handleKeepSessionChange = (event) => {
+    setKeepSession(event.target.checked); //
+  };
+
   const buttonDisabled = !credentials.email || !credentials.password;
   return (
     <div
@@ -54,7 +61,12 @@ function LoginPage({ onLogin }) {
         <button type="submit" disabled={buttonDisabled}>
           Log in
         </button>
-        <input type="checkbox" name="savesesion" />
+        <input
+          type="checkbox"
+          name="check"
+          onChange={handleKeepSessionChange}
+          checked={keepSession}
+        />
       </form>
     </div>
   );
