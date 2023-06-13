@@ -21,8 +21,8 @@ function App({ isInitillyLogged }) {
     <div className="paper">
       {isLogged ? (
         <>
-        <AdvertsPage onLogout={handleLogout} />
-        <NewAdvertPage  />
+        <AdvertsPage onLogout={handleLogout} isLogged={isLogged}/>
+        <NewAdvertPage onLogout={handleLogout} isLogged={isLogged} />
         </>
       ) : (
         <LoginPage onLogin={handleLogin} />

@@ -1,6 +1,7 @@
 import client from "../../api/client";
 
 const advertsURL = '/api/v1/adverts'
+const tagsURL = '/api/v1/adverts/tags'
 
 
 export const getLatestAdverts =() =>{
@@ -8,3 +9,6 @@ export const getLatestAdverts =() =>{
 };
 
 
+export const getTags = () => {
+    return client.get(tagsURL)
+}

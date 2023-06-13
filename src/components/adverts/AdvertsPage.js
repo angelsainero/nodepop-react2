@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { getLatestAdverts } from "./service";
-import { logout } from "../Auth/service";
 import Layout from "../layout/Layout";
 
 //1-Advertpage se renderiza por primera vez con Array vacio
@@ -11,7 +10,7 @@ import Layout from "../layout/Layout";
 //si no pasamos [] ejecuta despues de cada render
 //si lo pasamos ejecuta despues del primer
 
-const AdvertsPage = ({ onLogout }) => {
+const AdvertsPage = (props) => {
   const [adverts, setAdverts] = useState([]);
 
   useEffect(() => {
@@ -20,13 +19,8 @@ const AdvertsPage = ({ onLogout }) => {
     getLatestAdverts().then((adverts) => setAdverts(adverts));
   }, []);
 
-  const handleClick = async () => {
-    await logout();
-    onLogout();
-  };
-
   return (
-    <Layout title="Listado de anuncios">
+    <Layout title="Listado de anuncios"{...props}>
       <div className="advertsPage">
         {!!adverts.length ? (
           <ul>
