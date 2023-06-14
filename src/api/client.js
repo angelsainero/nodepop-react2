@@ -16,6 +16,7 @@ client.interceptors.response.use(
         ...error.response.data,
       });
     }
+    return Promise.reject(error)
   }
 );
 

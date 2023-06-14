@@ -45,7 +45,7 @@ const NewAdvertPage = (props) => {
             <input type="file" name="photo"></input>
           </div>
 
-          <button type="submit">Enviar</button>
+          <button type="submit" required>Enviar</button>
         </div>
       </form>
     </Layout>

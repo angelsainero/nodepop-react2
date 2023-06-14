@@ -1,13 +1,21 @@
+import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { ReactComponent as Icon } from "../../assets/nodepop.svg";
 import { logout } from "../Auth/service";
 import "./Header.css";
 import Button from "../shared/button";
 
+
 const Header = ({ isLogged, onLogout }) => {
+  const [showConfirmation, setShowConfirmation] = useState(false);
+
   const handleLogoutClick = async () => {
-    await logout();
-    onLogout();
+    if (showConfirmation) {
+      await logout();
+      onLogout();
+    } else {
+      setShowConfirmation(true);
+    }
   };
 
   return (
@@ -23,10 +31,17 @@ const Header = ({ isLogged, onLogout }) => {
       </NavLink>
       <nav>
         {isLogged ? (
-          <Button onClick={handleLogoutClick}>Logout</Button>
+          showConfirmation ? (
+            <>
+              <Button onClick={handleLogoutClick}>Confirmar</Button>
+              <Button onClick={() => setShowConfirmation(false)}>Cancelar</Button>
+            </>
+          ) : (
+            <Button onClick={handleLogoutClick}>Logout</Button>
+          )
         ) : (
-          <Link to="/login/"> 
-           <Button variant="relleno">Login</Button>
+          <Link to="/login/">
+            <Button variant="relleno">Login</Button>
           </Link>
         )}
       </nav>
