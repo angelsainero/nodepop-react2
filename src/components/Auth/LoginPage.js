@@ -1,7 +1,12 @@
 import { useState } from "react";
 import { login } from "./service";
+import Button from "../shared/button";
+import { useLocation, useNavigate } from "react-router-dom";
+
 
 function LoginPage({ onLogin }) {
+  const navigate = useNavigate();
+  const location = useLocation()
   //creamos estado para comprobar cuando se introducen datos en el formulario
   const [credentials, setCredentials] = useState({
     email: "",
@@ -15,6 +20,10 @@ function LoginPage({ onLogin }) {
     await login(credentials, keepSession);
     // Estoy logueado
     onLogin();
+    //redirect
+    const to = location.state?.from?.pathname || '/';
+    navigate(to)
+
   };
   //se ha introducido datos en el formulario
   const handleChange = (event) => {
@@ -58,9 +67,9 @@ function LoginPage({ onLogin }) {
           onChange={handleChange}
           value={credentials.password}
         />
-        <button type="submit" disabled={buttonDisabled}>
+        <Button type="submit" disabled={buttonDisabled}>
           Log in
-        </button>
+        </Button>
         <input
           type="checkbox"
           name="check"

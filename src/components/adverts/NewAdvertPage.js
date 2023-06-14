@@ -1,20 +1,21 @@
 import { useEffect, useState } from "react";
 import Layout from "../layout/Layout";
 import { getTags } from "./service";
+import "./NewAdvertPage.css"
 
-const NewAdvertPage = () => {
+const NewAdvertPage = (props) => {
   const [options, setOptions] = useState();
   useEffect(() => {
     getTags().then((options) => setOptions(options));
   }, []);
 
   return (
-    <Layout title="Sube tu anuncio">
+    <Layout title="Sube tu anuncio" {...props}>
       <form>
-        <div className="newAdvertPage">
+        <div className="newAdvertPage ">
           <div>
-            <label>Nombre</label>
-            <input name="name" required></input>
+            <label>Nombre</label> 
+            <input name="name" type="text" required></input>
           </div>
           <div>
             <label>Tipo</label>

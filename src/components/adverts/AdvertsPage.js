@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import { getLatestAdverts } from "./service";
 import Layout from "../layout/Layout";
+import { Link } from "react-router-dom";
+import Button from "../shared/button";
+
+
 
 //1-Advertpage se renderiza por primera vez con Array vacio
 //2-se configura un efecto
@@ -20,16 +24,23 @@ const AdvertsPage = (props) => {
   }, []);
 
   return (
-    <Layout title="Listado de anuncios"{...props}>
+    <Layout title="Listado de anuncios" {...props}>
       <div className="advertsPage">
         {!!adverts.length ? (
           <ul>
             {adverts.map((advert) => (
-              <li key={advert.id}>{advert.name}</li>
+              <li style={{listStyle:'none'}} key={advert.id}>
+                <Link to={`/adverts/${advert.id}`}>{advert.name} -</Link>
+                {advert.price} eur -{JSON.stringify(advert.sale)} -{advert.tags}
+              </li>
             ))}
           </ul>
         ) : (
-          <button>Sube tu primer Anuncio</button>
+          <div style={{textAlign:'center'}}>
+            <p>No hay anuncios disponibles!!</p>            
+            <Button as={Link} to="/adverts/new">Crea tu Anuncio</Button>
+            
+          </div>
         )}
       </div>
     </Layout>

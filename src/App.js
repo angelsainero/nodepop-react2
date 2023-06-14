@@ -6,6 +6,7 @@ import AdvertsPage from "./components/adverts/AdvertsPage";
 import NewAdvertPage from "./components/adverts/NewAdvertPage";
 import { Route, Routes, Navigate } from "react-router-dom";
 import AdvertPage from "./components/adverts/AdvertPage";
+import RequireAuth from "./components/Auth/RequireAuth";
 
 function App({ isInitillyLogged }) {
   //definimos aqui el estado en vez de en loginpage porque necesitamos también usarlo aqui y no podemos pasarlo de abajo a arriba
@@ -26,16 +27,25 @@ function App({ isInitillyLogged }) {
 
         <Route
           path="/adverts"
-          element={<AdvertsPage onLogout={handleLogout} isLogged={isLogged} />}
+          element={
+          <RequireAuth isLogged={isLogged}>
+          <AdvertsPage onLogout={handleLogout} isLogged={isLogged} />
+          </RequireAuth>}
         />
+
         <Route
           path="/adverts/:id"
-          element={<AdvertPage onLogout={handleLogout} isLogged={isLogged} />}
+          element={
+          <RequireAuth isLogged={isLogged}>
+          <AdvertPage onLogout={handleLogout} isLogged={isLogged} />
+          </RequireAuth>}
         />
         <Route
           path="/adverts/new"
           element={
-            <NewAdvertPage onLogout={handleLogout} isLogged={isLogged} />
+            <RequireAuth isLogged={isLogged}>
+              <NewAdvertPage onLogout={handleLogout} isLogged={isLogged} />
+            </RequireAuth>
           }
         />
         <Route path="/" element={<Navigate to="/adverts" />} />
