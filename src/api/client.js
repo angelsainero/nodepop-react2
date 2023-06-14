@@ -13,6 +13,7 @@ client.interceptors.response.use(
         console.log(error);
       return Promise.reject( {
         message: error.response.statusText,
+        ...error.response,
         ...error.response.data,
       });
     }
