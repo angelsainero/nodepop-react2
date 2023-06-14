@@ -15,17 +15,23 @@ import Button from "../shared/button";
 //si lo pasamos ejecuta despues del primer
 
 const AdvertsPage = (props) => {
+  const [isLoading, setIsLoading] = useState(true)
   const [adverts, setAdverts] = useState([]);
 
   useEffect(() => {
     // getLatestAdverts().then((response) => setAdverts(response.data));
     // gracias al interceptor podemos llamar a adverts directamente
-    getLatestAdverts().then((adverts) => setAdverts(adverts));
+    setIsLoading(true)
+    getLatestAdverts().then((adverts) => {
+      setAdverts(adverts);
+      setIsLoading(false)
+    });
   }, []);
 
   return (
     <Layout title="Listado de anuncios" {...props}>
-      <div className="advertsPage">
+      {isLoading ? <div>Loading....</div> : 
+      <div className="advertsPage">        
         {!!adverts.length ? (
           <ul>
             {adverts.map((advert) => (
@@ -43,6 +49,7 @@ const AdvertsPage = (props) => {
           </div>
         )}
       </div>
+      }
     </Layout>
   );
 };

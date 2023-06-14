@@ -7,6 +7,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 function LoginPage({ onLogin }) {
   const navigate = useNavigate();
   const location = useLocation()
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState(null)
+
   //creamos estado para comprobar cuando se introducen datos en el formulario
   const [credentials, setCredentials] = useState({
     email: "",
@@ -17,12 +20,22 @@ function LoginPage({ onLogin }) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    await login(credentials, keepSession);
-    // Estoy logueado
-    onLogin();
-    //redirect
-    const to = location.state?.from?.pathname || '/';
-    navigate(to)
+    setIsLoading(true)
+    try {
+      await login(credentials, keepSession);
+      setIsLoading(false)
+      // Estoy logueado
+      onLogin();
+      //redirect
+      const to = location.state?.from?.pathname || '/';
+      navigate(to)
+      
+    } catch (error) {      
+      setIsLoading(false)
+      setError(error)
+      return;
+    }
+    
 
   };
   //se ha introducido datos en el formulario
@@ -46,7 +59,7 @@ function LoginPage({ onLogin }) {
     setKeepSession(event.target.checked); //
   };
 
-  const buttonDisabled = !credentials.email || !credentials.password;
+  const buttonDisabled = !credentials.email || !credentials.password || isLoading ;
   return (
     <div
       style={{
@@ -77,6 +90,9 @@ function LoginPage({ onLogin }) {
           checked={keepSession}
         />
       </form>
+      {
+        error && <div>{error.message}</div>
+      }
     </div>
   );
 }
