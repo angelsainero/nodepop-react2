@@ -8,6 +8,9 @@ align-items: center;
 outline-style:none;
 justify-content:center;
 text-decoration: none;
+
 `;
 
 export default Button;
+
+
