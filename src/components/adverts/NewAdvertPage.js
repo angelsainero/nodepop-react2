@@ -69,8 +69,8 @@ const NewAdvertPage = (props) => {
           <div>
             <label>Tipo</label>
             <select name="sale">
-              <option>Venta</option>
-              <option>compra</option>
+              <option value="true">Venta</option>
+              <option value="false">compra</option>
             </select>
           </div>
           <div>
