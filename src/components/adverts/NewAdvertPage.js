@@ -7,6 +7,8 @@ import { createAdvert } from "./service";
 import Button from "../shared/button";
 
 const NewAdvertPage = (props) => {
+  const [selectedTags, setSelectedTags] = useState([]);
+
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -26,6 +28,13 @@ const NewAdvertPage = (props) => {
   useEffect(() => {
     getTags().then((options) => setOptions(options));
   }, []);
+
+  const handleTagChange = (event) => {
+    const selectedValues = Array.from(event.target.options)
+      .filter((option) => option.selected)
+      .map((option) => option.value);
+    setSelectedTags(selectedValues);
+  };
   
   const isDisabled =
     isLoading || !(content.name && content.price && content.photo);
@@ -38,7 +47,7 @@ const NewAdvertPage = (props) => {
       formData.append("name", event.target.name.value);
       formData.append("sale", event.target.sale.value);
       formData.append("price", event.target.price.value);
-      formData.append("tags", event.target.tags.value);
+      formData.append("tags", selectedTags.join(","));
       formData.append("photo", event.target.photo.files[0]);
       const advert = await createAdvert(formData);
       setIsLoading(false);
@@ -86,9 +95,9 @@ const NewAdvertPage = (props) => {
           <div>
             <label>Tags</label>
             {options && options.length > 0 ? (
-              <select name="tags">
+              <select name="tags" multiple onChange={handleTagChange}>
                 {options.map((option, index) => (
-                  <option key={index}>{option}</option>
+                  <option key={index} value={option}>{option}</option>
                 ))}
               </select>
             ) : (
